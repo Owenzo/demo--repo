@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozo Journey - Wealth Operating System</title>
+    <!-- CSS and Fonts -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ChartJS library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <span class="logo-icon"><i class="fa-solid fa-compass-drafting"></i></span>
+            <span class="logo-text">OZO JOURNEY</span>
+        </div>
+
+        <nav class="nav-links">
+            <a class="nav-item active" data-view="dashboard">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Wealth Dashboard</span>
+            </a>
+            <a class="nav-item" data-view="chat">
+                <i class="fa-solid fa-brain"></i>
+                <span>Billionaire AI Brain</span>
+            </a>
+            <a class="nav-item" data-view="excel">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Excel Ingestion</span>
+            </a>
+            <a class="nav-item" data-view="notebook">
+                <i class="fa-solid fa-book-open"></i>
+                <span>NotebookLM Hub</span>
+            </a>
+            <a class="nav-item" data-view="portability">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Portability Layer</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-avatar">OZ</div>
+            <div class="user-info">
+                <span class="user-name">owenzomitho5</span>
+                <span class="user-meta">Wealth Tier: Sovereign</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+        <!-- 1. DASHBOARD VIEW -->
+        <section id="dashboard" class="app-view active">
+            <div class="header">
+                <div>
+                    <h1 class="page-title">Wealth Intelligence Hub</h1>
+                    <p class="page-subtitle">Track, simulate, and compound assets with first-principles methodology.</p>
+                </div>
+                <div class="header-actions">
+                    <span class="pulse-indicator pulse-success" id="health-pulse"></span>
+                    <span id="business-health-status" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Business Accelerating</span>
+                    <button class="btn btn-secondary" onclick="document.querySelector('[data-view=excel]').click()">
+                        <i class="fa-solid fa-upload"></i> Upload CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Key Dashboard Statistics -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-title">
+                        <span>Net Account Balance</span>
+                        <i class="fa-solid fa-vault text-muted"></i>
+                    </div>
+                    <div class="card-value" id="dash-sales">$142,500</div>
+                    <div class="card-trend trend-up">
+                        <i class="fa-solid fa-caret-up"></i>
+                        <span>+18.4% growth velocity</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <span>Compound Monthly Profit</span>
+                        <i class="fa-solid fa-sack-dollar text-muted"></i>
+                    </div>
+                    <div class="card-value" id="dash-profit">$58,300</div>
+                    <div class="card-trend trend-up">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Optimized reinvestment</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <span>AI Opportunity Index</span>
+                        <i class="fa-solid fa-radar text-muted"></i>
+                    </div>
+                    <div class="card-value">88<span style="font-size: 14px; color: var(--text-muted);">/100</span></div>
+                    <div class="card-trend trend-up" style="color: var(--primary);">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>9+ active strategies detected</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecasting Visualizer Grid -->
+            <div class="visual-panel">
+                <div class="card">
+                    <div class="card-title">
+                        <span>Compound Growth Projection</span>
+                        <div class="header-actions">
+                            <span class="btn-secondary" style="padding: 2px 10px; font-size: 11px; border-radius: 4px;" id="forecast-mode-label">Mode: Balanced</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Interactive Forecasting Panel -->
+                <div class="card controls-card">
+                    <div class="card-title">
+                        <span>Interactive Projections</span>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Initial Principal</span>
+                            <span id="label-principal">$10,000</span>
+                        </div>
+                        <input type="range" class="slider-input" id="slider-principal" min="1000" max="100000" step="1000" value="10000">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Monthly Reinvestment</span>
+                            <span id="label-monthly">$1,500</span>
+                        </div>
+                        <input type="range" class="slider-input" id="slider-monthly" min="100" max="20000" step="100" value="1500">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Compounding Rate (APY)</span>
+                            <span id="label-rate">12%</span>
+                        </div>
+                        <input type="range" class="slider-input" id="slider-rate" min="1" max="50" step="1" value="12">
+                    </div>
+                    <div class="slider-group">
+                        <label class="slider-label">Simulation Mode</label>
+                        <select id="sim-mode" class="chat-input" style="padding: 8px; margin-top: 4px;">
+                            <option value="balanced">Balanced Mode</option>
+                            <option value="conservative">Conservative Mode (Buffett Focus)</option>
+                            <option value="aggressive">Aggressive Mode (Musk Growth)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Allocation Grid -->
+            <div class="visual-panel">
+                <div class="card">
+                    <div class="card-title">
+                        <span>Strategic Capital Allocation Model</span>
+                        <span class="text-muted" style="font-size: 12px;">Compounding Blueprint</span>
+                    </div>
+                    <table class="wealth-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Allocation</th>
+                                <th>Projected Amount</th>
+                                <th>Billionaire Principle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Business Reinvestment</strong></td>
+                                <td style="color: var(--primary);">45%</td>
+                                <td id="alloc-business">$64,125</td>
+                                <td>Bezos infrastructure scale</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Emergency Liquidity</strong></td>
+                                <td style="color: var(--success);">15%</td>
+                                <td id="alloc-emergency">$21,375</td>
+                                <td>Buffett safety margin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Commodity Opportunities</strong></td>
+                                <td style="color: var(--warning);">20%</td>
+                                <td id="alloc-commodity">$28,500</td>
+                                <td>High-conviction value</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Long-term Stocks</strong></td>
+                                <td>15%</td>
+                                <td id="alloc-stocks">$21,375</td>
+                                <td>Patience in capital markets</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Education & AI Tools</strong></td>
+                                <td style="color: #8b5cf6;">5%</td>
+                                <td id="alloc-ai">$7,125</td>
+                                <td>Jensen Huang leverage</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><span>Visual Allocation Split</span></div>
+                    <div class="chart-container" style="height: 220px;">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. BILLIONAIRE CHAT VIEW -->
+        <section id="chat" class="app-view">
+            <div class="header">
+                <div>
+                    <h1 class="page-title">Billionaire Strategic Mentorship</h1>
+                    <p class="page-subtitle">Formulate high-conviction decisions with counsel from legendary builders.</p>
+                </div>
+            </div>
+
+            <div class="chat-container-layout">
+                <!-- Sidebar of characters -->
+                <div class="persona-sidebar" id="persona-list">
+                    <!-- Dynamic insertion -->
+                </div>
+
+                <!-- Chat console -->
+                <div class="chat-box">
+                    <div class="chat-header">
+                        <div>
+                            <h3 id="chat-active-name" style="font-weight: 700;">Warren Buffett</h3>
+                            <span id="chat-active-title" style="font-size: 12px; color: var(--text-muted);">Chairman, Berkshire Hathaway</span>
+                        </div>
+                        <div class="header-actions">
+                            <span class="btn-secondary" style="font-size: 11px; padding: 2px 8px; border-radius: 4px;">Memory Active</span>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages" id="chat-messages-container">
+                        <!-- Initial message -->
+                        <div class="message ai">
+                            Hello. Time in the market always beats timing the market. Let's look at your Ozo Journey statistics. Ask me how to optimize your capital allocations.
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" id="chat-input-field" placeholder="Ask for capital allocation, economic moats, or pricing strategy...">
+                        <button class="btn btn-primary" id="chat-send-btn">
+                            <i class="fa-solid fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. EXCEL INTELLIGENCE VIEW -->
+        <section id="excel" class="app-view">
+            <div class="header">
+                <div>
+                    <h1 class="page-title">Spreadsheet Intelligence Engine</h1>
+                    <p class="page-subtitle">Ingest sales and inventory ledger matrices to scan opportunities.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><span>Upload Ledger</span></div>
+                <div class="dropzone" id="csv-dropzone">
+                    <i class="fa-solid fa-file-csv"></i>
+                    <h3>Drag & Drop Sales/Inventory CSV Ledger here</h3>
+                    <p class="text-muted" style="margin-top: 8px; font-size: 13px;">Or click to browse files from your disk.</p>
+                    <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
+                </div>
+            </div>
+
+            <div class="visual-panel" id="excel-analytics-panel" style="display: none;">
+                <!-- Live Business Health Indicators -->
+                <div class="card">
+                    <div class="card-title"><span>Business Health Engine</span></div>
+                    <div id="excel-alerts-container" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Custom alerts -->
+                    </div>
+                </div>
+
+                <!-- Predictive Ordering Module -->
+                <div class="card">
+                    <div class="card-title"><span>Predictive Ordering & Turnover</span></div>
+                    <div style="display: flex; flex-direction: column; gap: 16px;" id="predictive-orders-container">
+                        <!-- Predictive elements -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. NOTEBOOKLM VIEW -->
+        <section id="notebook" class="app-view">
+            <div class="header">
+                <div>
+                    <h1 class="page-title">NotebookLM Sync Hub</h1>
+                    <p class="page-subtitle">Index capital intelligence documents and generate dynamic audio briefings.</p>
+                </div>
+                <div class="header-actions">
+                    <span class="text-muted" style="font-size: 12px;"><i class="fa-solid fa-user-shield"></i> owenzomitho5</span>
+                </div>
+            </div>
+
+            <div class="visual-panel">
+                <div class="card audio-widget">
+                    <div class="card-title">
+                        <span>AI Audio Briefing Generator</span>
+                        <span class="pulse-indicator pulse-success" id="audio-playing-indicator" style="display: none;"></span>
+                    </div>
+                    <p class="text-secondary" style="font-size: 14px;">Generate an automated, highly-structured institutional briefing summarizing your latest compounding metrics.</p>
+                    
+                    <!-- Animated Waveform -->
+                    <div class="wave-container" id="audio-wave">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 12px;">
+                        <button class="btn btn-primary" id="btn-audio-play">
+                            <i class="fa-solid fa-play"></i> Listen to Briefing
+                        </button>
+                        <button class="btn btn-secondary" id="btn-audio-stop" style="display: none;">
+                            <i class="fa-solid fa-stop"></i> Mute
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><span>Indexed Knowledge Base</span></div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="padding: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 style="font-size: 14px; font-weight:600;">Intelligent Asset Allocation.pdf</h4>
+                                <span class="text-muted" style="font-size: 11px;">Size: 2.4 MB | Synced</span>
+                            </div>
+                            <span style="color: var(--success); font-size: 13px;"><i class="fa-solid fa-circle-check"></i> Indexed</span>
+                        </div>
+                        <div style="padding: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 style="font-size: 14px; font-weight:600;">Maize & Soy Commodities Cycle 2026.docx</h4>
+                                <span class="text-muted" style="font-size: 11px;">Size: 840 KB | Synced</span>
+                            </div>
+                            <span style="color: var(--success); font-size: 13px;"><i class="fa-solid fa-circle-check"></i> Indexed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PORTABILITY LAYER VIEW -->
+        <section id="portability" class="app-view">
+            <div class="header">
+                <div>
+                    <h1 class="page-title">Antigravity Portability Layer</h1>
+                    <p class="page-subtitle">Export or migrate your entire wealth operating memory to secure target systems.</p>
+                </div>
+            </div>
+
+            <div class="visual-panel">
+                <div class="card">
+                    <div class="card-title"><span>JSON Memory Porting</span></div>
+                    <p class="text-secondary" style="font-size: 14px; margin-bottom: 20px;">Download your active strategist logs, allocation adjustments, and persistent memory parameters in clean structured JSON.</p>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-primary" id="btn-export-memory">
+                            <i class="fa-solid fa-download"></i> Export Memory File
+                        </button>
+                        <button class="btn btn-secondary" onclick="document.getElementById('import-file-input').click()">
+                            <i class="fa-solid fa-file-import"></i> Load Memory File
+                        </button>
+                        <input type="file" id="import-file-input" accept=".json" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><span>Active Memory States</span></div>
+                    <div style="font-family: var(--font-mono); font-size: 12px; background: #000; padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); max-height: 240px; overflow-y: auto;" id="memory-state-preview">
+                        {
+                          "platform": "Ozo Journey",
+                          "version": "1.0.0",
+                          "primary_mentor": "Warren Buffett",
+                          "synced_account": "owenzomitho5"
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Application Controller Logic -->
+    <script src="billionaire-ai.js"></script>
+    <script src="excel-parser.js"></script>
+    <script src="data-portability.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
